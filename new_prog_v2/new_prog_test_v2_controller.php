@@ -207,5 +207,41 @@ if($action=="search_multiple_emplyee_popup")
 	echo  create_list_view ( "list_view_table", "SYS ID,COMPANY NAME,EMPLOYEE NAME,EMPLOYEE ID,DOB,EMPLYEE AGE,LOCATION,SALARY USD,SALARY BDT", "50,100,100,70,70,70,80,80,100","750","400",0, $sql, "populate_list_data", "id","", 1, "0,COMPANY_ID,0,0,0,0,0,0,0", $arr , "ID,COMPANY_ID,EMPLOYEE_NAME,EMPLOYEE_ID,DATE_OF_BIRTH,EMPLYEE_AGE,COMPANY_LOCATION,SALARY_USD,SALARY_BDT", "new_prog_test_v2_controller",'setFilterGrid("list_view_table",-1);','0,0,0,0,3,0,0,0,0' ) ;
 					
 }
+if($action=="list_emplyee_name")
+{
+	echo load_html_head_contents("Popup Info","../../", 1, 1,$unicode,1);
+
+	?>
+		<script>
+			function populate_employee_name_id(id)
+			{
+			// alert (id);
+			document.getElementById('employee_info_id').value= id;
+			// alert (id);return;
+			parent.emailwindow.hide();  	
+			}
+		</script>
+			<input type="hidden" id = "employee_info_id">
+
+   <?php
+
+	$sql = "SELECT FIRST_NAME ||' '|| MIDDLE_NAME ||' '|| LAST_NAME AS EMPLOYEE_NAME,ID,
+    EMP_CODE From LIB_EMPLOYEE WHERE status_active = 1 AND is_deleted = 0   order by id desc";
+
+	echo  create_list_view ("list_employee_name", "Employee Name,Employee Id", "300,150","450","200",0, $sql, "populate_employee_name_id", "id","", 1, "0,0", $arr , "EMPLOYEE_NAME,EMP_CODE", "new_prog_test_v2_controller",'setFilterGrid("list_employee_name",-1);','0,0' ) ;
+}
+if($action=="populate_employee_name_id")
+{
+	// var_dump($data);
+	 $sql = "SELECT FIRST_NAME ||' '|| MIDDLE_NAME ||' '|| LAST_NAME AS EMPLOYEE_NAME,ID,
+    EMP_CODE From LIB_EMPLOYEE WHERE status_active = 1 AND is_deleted = 0 AND id= $data  order by id desc";
+	$result = sql_select($sql);	
+
+	foreach($result as $row)
+	{
+		echo "document.getElementById('text_employee_name').value = '".$row[csf('EMPLOYEE_NAME')]."';\n";
+		echo "document.getElementById('text_employee_id').value = '".$row[csf('EMP_CODE')]."';\n";
+	}
+}
 	
 ?>

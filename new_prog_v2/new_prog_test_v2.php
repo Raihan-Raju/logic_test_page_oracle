@@ -165,7 +165,35 @@ function search_multiple_emplyee_popup()
 	
 	
 //}
-	
+// function search_emplyee_name()
+//  {
+//  	 //alert ("search_emplyee_name");
+//  	 emailwindow=dhtmlmodal.open('EmailBox', 'iframe', 'requires/new_prog_test_v2_controller.php?action=list_emplyee_name'+'&text_employee_name='+ $('#text_employee_name').val(),'Emplyee name list and Id', 'width=450px,height=200px,center=1,resize=0,scrolling=0','')
+// 	  emailwindow.onclose=function()
+// 	  {
+// 		var employee_name_id=this.contentDoc.getElementById("employee_info_id").value;
+// 		alert(employee_name_id);
+// 		get_php_form_data(employee_name_id,"populate_employee_name_id","requires/new_prog_test_v2_controller");
+// 		// set_button_status(1, permission, 'fnc_employee_data_entry', 1);
+
+// 	  }
+//  }
+
+
+function search_emplyee_name()
+ {
+ 	 //alert ("search_emplyee_name");
+ 	 emailwindow=dhtmlmodal.open('EmailBox', 'iframe', 'requires/new_prog_test_v2_controller.php?action=list_emplyee_name'+'&text_employee_name='+ $('#text_employee_name').val(),'Emplyee name list and Id', 'width=450px,height=200px,center=1,resize=0,scrolling=0','')
+	  emailwindow.onclose=function()
+	  {
+		var employee_name_id=this.contentDoc.getElementById("employee_info_id").value;
+		var response = trim(employee_name_id).split('_');
+
+		document.getElementById('text_employee_name').value = response[1];
+		document.getElementById('text_employee_id').value=response[0];
+		
+	  }
+ }
 
 	//----------------------------------------------------------
 </script>
@@ -205,7 +233,7 @@ function search_multiple_emplyee_popup()
 						</td>
 
 						<td>
-							<input id="text_employee_name" type="text" class="text_boxes">
+							<input id="text_employee_name" type="text" class="text_boxes"ondblclick="search_emplyee_name()" placeholder="Doble click">
 						</td>
 
 						
